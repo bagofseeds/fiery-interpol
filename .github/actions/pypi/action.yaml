@@ -43,10 +43,10 @@ runs:
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
         password: ${{ inputs.test-password }}
-        repository_url: https://test.pypi.org/legacy/
+        repository-url: https://test.pypi.org/legacy/
     - name: Publish distribution 📦 to PyPI
       if: ${{ contains(inputs.publish, 'pypi') }}
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
         password: ${{ inputs.pypi-password }}
-        repository_url: https://upload.pypi.org/legacy/
+        repository-url: https://upload.pypi.org/legacy/
