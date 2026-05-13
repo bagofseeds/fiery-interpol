@@ -72,7 +72,7 @@ jobs:
       tag: ${{ inputs.tag }}
 
   publish-testpypi-if-tests:
-    if: inputs.test && contains(inputs.publish, 'test')
+    if: ${{ inputs.test && contains(inputs.publish, 'test') }}
     needs: tests
     uses: ./.github/workflows/publish-pypi.yaml
     with:
@@ -83,7 +83,7 @@ jobs:
       password: ${{ secrets.TEST_PYPI_TOKEN }}
 
   publish-testpypi-always:
-    if: !inputs.test && contains(inputs.publish, 'test')
+    if: ${{ !inputs.test && contains(inputs.publish, 'test') }}
     uses: ./.github/workflows/publish-pypi.yaml
     with:
       python-version: ${{ inputs.python-version }}
@@ -93,7 +93,7 @@ jobs:
       password: ${{ secrets.TEST_PYPI_TOKEN }}
 
   publish-pypi-if-testpypi-and-tests:
-    if: inputs.test && contains(inputs.publish, 'pypi') && contains(inputs.publish, 'test')
+    if: ${{ inputs.test && contains(inputs.publish, 'pypi') && contains(inputs.publish, 'test') }}
     needs: publish-testpypi-if-tests
     uses: ./.github/workflows/publish-pypi.yaml
     with:
@@ -103,7 +103,7 @@ jobs:
       password: ${{ secrets.PYPI_TOKEN }}
 
   publish-pypi-if-tests:
-    if: inputs.test && contains(inputs.publish, 'pypi') && !contains(inputs.publish, 'test')
+    if: ${{ inputs.test && contains(inputs.publish, 'pypi') && !contains(inputs.publish, 'test') }}
     needs: tests
     uses: ./.github/workflows/publish-pypi.yaml
     with:
@@ -113,7 +113,7 @@ jobs:
       password: ${{ secrets.PYPI_TOKEN }}
 
   publish-pypi-if-testpypi:
-    if: !inputs.test && contains(inputs.publish, 'pypi') && contains(inputs.publish, 'test')
+    if: ${{ !inputs.test && contains(inputs.publish, 'pypi') && contains(inputs.publish, 'test') }}
     needs: publish-testpypi-always
     uses: ./.github/workflows/publish-pypi.yaml
     with:
@@ -123,7 +123,7 @@ jobs:
       password: ${{ secrets.PYPI_TOKEN }}
 
   publish-pypi-always:
-    if: !inputs.test && contains(inputs.publish, 'pypi') && !contains(inputs.publish, 'test')
+    if: ${{ !inputs.test && contains(inputs.publish, 'pypi') && !contains(inputs.publish, 'test') }}
     uses: ./.github/workflows/publish-pypi.yaml
     with:
       python-version: ${{ inputs.python-version }}
@@ -132,7 +132,7 @@ jobs:
       password: ${{ secrets.PYPI_TOKEN }}
 
   publish-conda-if-tests:
-    if: inputs.test && contains(inputs.publish, 'conda')
+    if: ${{ inputs.test && contains(inputs.publish, 'conda') }}
     needs: tests
     uses: ./.github/workflows/publish-conda.yaml
     with:
@@ -143,7 +143,7 @@ jobs:
       password: ${{ secrets.ANACONDA_TOKEN }}
 
   publish-conda-always:
-    if: !inputs.test && contains(inputs.publish, 'conda')
+    if: ${{ !inputs.test && contains(inputs.publish, 'conda') }}
     uses: ./.github/workflows/publish-conda.yaml
     with:
       tag: ${{ inputs.tag }}
