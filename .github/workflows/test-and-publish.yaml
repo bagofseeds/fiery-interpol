@@ -36,6 +36,34 @@ on:
         required: false
         default: 'noarch'
 
+  workflow_call:
+    inputs:
+      tag:
+        description: 'Commit / Branch / Tag / SHA to checkout'
+        required: false
+        default: ''
+        type: string
+      test:
+        description: 'Run tests'
+        required: false
+        default: true
+        type: boolean
+      publish:
+        description: 'Publish'
+        required: false
+        default: 'none'
+        type: string
+      python-version:
+        description: 'Python version'
+        required: false
+        default: '3.13'
+        type: string
+      conda-platforms:
+        description: 'Target platforms'
+        required: false
+        default: 'noarch'
+        type: string
+
 jobs:
   tests:
     if: inputs.test
