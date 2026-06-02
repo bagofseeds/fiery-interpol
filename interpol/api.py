@@ -76,7 +76,7 @@ _doc_bound_coeff = \
     See https://en.wikipedia.org/wiki/Discrete_cosine_transform
         https://en.wikipedia.org/wiki/Discrete_sine_transform
 
-    /!\ Only 'dct1', 'dct2' and 'dft' are implemented for interpolation
+    /!\\ Only 'dct1', 'dct2' and 'dft' are implemented for interpolation
         orders >= 6."""
 
 _ref_coeff = \
