@@ -39,7 +39,7 @@ test = [
 [build-system]
 requires = [
     "setuptools>=59.0",
-    "wheel>=0.45.1",
+    "wheel",
     "versioningit>=1.0",
 ]
 build-backend = "setuptools.build_meta"
