@@ -1,5 +1,5 @@
 ---
-icon: material/fire
+icon: lucide/notebook
 ---
 
 # Examples
