@@ -26,15 +26,16 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - {python-version: "3.7",  torch-version: "1.4"}
-          - {python-version: "3.7",  torch-version: "1.8"}
-          - {python-version: "3.9",  torch-version: "1.11"}
-          - {python-version: "3.11", torch-version: "2.0"}
-          - {python-version: "3.14", torch-version: "2.10"}
+          - {python-version: "3.7",  torch-version: "1.4",  os: "ubuntu-22.04"}
+          - {python-version: "3.7",  torch-version: "1.8",  os: "ubuntu-22.04"}
+          - {python-version: "3.9",  torch-version: "1.11", os: "ubuntu-22.04"}
+          - {python-version: "3.11", torch-version: "2.0",  os: "ubuntu-latest"}
+          - {python-version: "3.14", torch-version: "2.10", os: "ubuntu-latest"}
     uses: bagofseeds/actions/.github/workflows/test.yaml@main
     with:
       tag: ${{ inputs.tag }}
       python-version: ${{ matrix.python-version }}
+      os: ${{ matrix.os }}
       requirements-file: tests/requirements.txt
       # torch pinned per matrix entry, from the PyTorch wheel index
       pip-install: "torch==${{ matrix.torch-version }}.* -f https://download.pytorch.org/whl/torch_stable.html"

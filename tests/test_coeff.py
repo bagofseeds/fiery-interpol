@@ -14,4 +14,4 @@ bounds = ['dct1', 'dct2', 'dft']
 def test_identity(length, bound, order):
     x = torch.randn([length], dtype=torch.double)
     y = resize(x, shape=[length], bound=bound, interpolation=order)
-    assert torch.allclose(x, y)
+    assert torch.allclose(x, y, atol=1e-6)

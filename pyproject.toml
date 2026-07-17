@@ -71,6 +71,7 @@ testpaths = ["tests"]
 
 [tool.ruff]
 line-length = 79
+extend-exclude = ["docs/examples"]
 
 [tool.ruff.format]
 quote-style = "preserve"
