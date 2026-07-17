@@ -32,7 +32,7 @@ pip install fiery-interpol
 ## Usage
 
 ```python
-import fiery.interpol as interpol
+from fiery import interpol
 ```
 
 **See our [example notebooks](examples/)**
