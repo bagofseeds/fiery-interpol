@@ -3,9 +3,15 @@
 extra_css = ["stylesheets/extra.css"]
 
 nav = [
-  {"All the Bags" = "https://bagofseeds.github.io/fiery/"},
+  {"All the Matches" = "https://bagofseeds.github.io/fiery/"},
   {"Fiery Interpol" = "index.md"},
   {"API" = "api/index.md"},
+  {"Examples" = [
+    "examples/index.md",
+    {"Interpolate" = "examples/interpolate.md"},
+    {"Resize" = "examples/resize.md"},
+    {"Rotation" = "examples/rotation.md"},
+  ]},
 ]
 
 # The site_name is shown in the page header and the browser window title
@@ -82,6 +88,9 @@ allow_inspection = true
 filters = "public"
 group_by_category = true
 show_category_heading = true
+modernize_annotations       = true
+show_signature_annotations  = true
+signature_crossrefs         = true
 
 # ----------------------------------------------------------------------------
 # Markdown extras
