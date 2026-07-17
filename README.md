@@ -1,5 +1,8 @@
-# torch-interpol
+# fiery-interpol
 High-order spline interpolation in PyTorch
+
+`fiery-interpol` is a [`fiery`](https://github.com/bagofseeds/fiery) bag: it
+installs on its own and imports as `fiery.interpol`.
 
 ## Description
 
@@ -19,19 +22,17 @@ PyTorch-based package dedicated to NeuroImaging and Medical Image Computing.
 
 - `torch >= 1.3`
 
-### Conda
-
-```shell
-conda install torch-interpol -c balbasty -c pytorch
-```
-
 ### Pip
 
 ```shell
-pip install torch-interpol
+pip install fiery-interpol
 ```
 
 ## Usage
+
+```python
+import fiery.interpol as interpol
+```
 
 **See our [example notebooks](examples/)**
 
@@ -294,4 +295,4 @@ resized : (batch, channel, *shape) tensor
 
 ## License
 
-torch-interpol is released under the MIT license.
+fiery-interpol is released under the MIT license.

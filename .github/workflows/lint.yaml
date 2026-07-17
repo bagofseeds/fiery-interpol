@@ -1,4 +1,4 @@
-name: Run tests
+name: Lint and spellcheck
 
 on:
   workflow_dispatch:
@@ -28,9 +28,15 @@ permissions:
   contents: read
 
 jobs:
-  tests:
-    uses: bagofseeds/actions/.github/workflows/test.yaml@main
+  
+  ruff:
+    uses: bagofseeds/actions/.github/workflows/ruff.yaml@main
     with:
       tag: ${{ inputs.tag }}
       python-version: ${{ inputs.python-version }}
-      requirements-file: tests/requirements.txt
+
+  spellcheck:
+    uses: bagofseeds/actions/.github/workflows/codespell.yaml@main
+    with:
+      tag: ${{ inputs.tag }}
+      python-version: ${{ inputs.python-version }}

@@ -1,0 +1,89 @@
+[project]
+name = "fiery-interpol"
+authors = [
+    {name = "Yael Balbastre", email = "yael.balbastre@gmail.com"},
+]
+maintainers = [
+    {name = "Yael Balbastre", email = "yael.balbastre@gmail.com"},
+]
+description = "High-order spline interpolation in PyTorch"
+readme = "README.md"
+license = {text = "MIT"}
+keywords = ["fiery", "pytorch", "torch", "interpolation", "splines"]
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Scientific/Engineering :: Medical Science Apps.",
+]
+dynamic = ["version"]
+requires-python = ">=3.6"
+dependencies = [
+    "torch>=1.3",
+]
+
+[project.urls]
+Homepage = "https://github.com/bagofseeds/fiery-interpol"
+Documentation = "https://bagofseeds.github.io/fiery-interpol/"
+Issues = "https://github.com/bagofseeds/fiery-interpol/issues"
+Repository = "https://github.com/bagofseeds/fiery-interpol"
+
+[project.optional-dependencies]
+test = [
+    "pytest>=7",
+]
+
+[build-system]
+requires = [
+    "setuptools>=59.0",
+    "wheel>=0.45.1",
+    "versioningit>=1.0",
+]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["fiery*"]
+namespaces = true
+
+[tool.versioningit]
+default-version = "0+unknown"
+
+[tool.versioningit.vcs]
+default-tag = "0.1"
+
+[tool.versioningit.format]
+distance = "{base_version}+{distance}.{vcs}{rev}"
+dirty = "{base_version}+{distance}.{vcs}{rev}.dirty"
+distance-dirty = "{base_version}+{distance}.{vcs}{rev}.dirty"
+
+[tool.versioningit.write]
+file = "src/fiery/interpol/_version.py"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 79
+
+[tool.ruff.format]
+quote-style = "preserve"
+
+[tool.ruff.lint]
+select = ["B", "E", "F", "I", "W"]
+ignore = [
+    "B905",   # zip(strict=...) requires Python >= 3.10
+    "B007",   # allow unused loop variables
+    "E731",   # allow assigning lambdas to variables
+]
+
+[tool.codespell]
+check-filenames = true
+skip = ".git,*.egg-info,build,dist,*.pdf,*.svg,*.ipynb"
+ignore-words-list = "unser,nd,ointer"

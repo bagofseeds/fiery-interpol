@@ -5,36 +5,36 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: 'Commit / Branch / Tag / SHA to checkout'
+        description: Commit / Branch / Tag / SHA to checkout
         required: false
-        default: ''
+        default: ""
 
   workflow_call:
     inputs:
       tag:
-        description: 'Commit / Branch / Tag / SHA to checkout'
+        description: Commit / Branch / Tag / SHA to checkout
         required: false
-        default: ''
+        default: ""
         type: string
+
+permissions:
+  contents: read
 
 jobs:
   test:
     strategy:
+      fail-fast: false
       matrix:
         include:
-          - python-version: "3.7"
-            pytorch-version: "1.4"
-          - python-version: "3.7"
-            pytorch-version: "1.8"
-          - python-version: "3.9"
-            pytorch-version: "1.11"
-          - python-version: "3.11"
-            pytorch-version: "2.0"
-          - python-version: "3.14"
-            pytorch-version: "2.10"
-
-    uses: ./.github/workflows/test.yaml
+          - {python-version: "3.7",  torch-version: "1.4"}
+          - {python-version: "3.7",  torch-version: "1.8"}
+          - {python-version: "3.9",  torch-version: "1.11"}
+          - {python-version: "3.11", torch-version: "2.0"}
+          - {python-version: "3.14", torch-version: "2.10"}
+    uses: bagofseeds/actions/.github/workflows/test.yaml@main
     with:
       tag: ${{ inputs.tag }}
       python-version: ${{ matrix.python-version }}
-      pytorch-version: ${{ matrix.pytorch-version }}
+      requirements-file: tests/requirements.txt
+      # torch pinned per matrix entry, from the PyTorch wheel index
+      pip-install: "torch==${{ matrix.torch-version }}.* -f https://download.pytorch.org/whl/torch_stable.html"
