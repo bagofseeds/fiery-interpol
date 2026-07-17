@@ -20,6 +20,7 @@ PyTorch-based package dedicated to NeuroImaging and Medical Image Computing.
 
 ### Dependency
 
+- `pytorch >= 3.6`
 - `torch >= 1.3`
 
 ### Pip
