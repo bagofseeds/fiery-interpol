@@ -30,7 +30,7 @@ jobs:
           - {python-version: "3.7",  torch-version: "1.8",  os: "ubuntu-22.04"}
           - {python-version: "3.9",  torch-version: "1.11", os: "ubuntu-22.04"}
           - {python-version: "3.11", torch-version: "2.0",  os: "ubuntu-latest"}
-          - {python-version: "3.14", torch-version: "2.10", os: "ubuntu-latest"}
+          - {python-version: "3.x",  torch-version: "2",    os: "ubuntu-latest"}
     uses: bagofseeds/actions/.github/workflows/test.yaml@main
     with:
       tag: ${{ inputs.tag }}
