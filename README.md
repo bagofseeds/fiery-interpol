@@ -1,7 +1,7 @@
 # fiery-interpol
 High-order spline interpolation in PyTorch
 
-`fiery-interpol` is a [`fiery`](https://github.com/bagofseeds/fiery) match: it
+`fiery-interpol` is a [`fiery`](https://bagofseeds.github.io/fiery/) match: it
 installs on its own and imports as `fiery.interpol`.
 
 ## Description
