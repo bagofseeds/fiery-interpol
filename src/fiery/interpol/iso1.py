@@ -1201,10 +1201,10 @@ def push1d(
     extrapolate: int = 1,
 ):
     """
-    inp: (B, C, iX, iY) tensor
-    g: (B, iX, iY, 2) tensor
-    shape: List{2}[int], optional
-    bound: List{2}[Bound] tensor
+    inp: (B, C, iX) tensor
+    g: (B, iX, 1) tensor
+    shape: List{1}[int], optional
+    bound: List{1}[Bound] tensor
     extrapolate: ExtrapolateType
     returns: (B, C, *shape) tensor
     """

@@ -6,21 +6,21 @@ installs on its own and imports as `fiery.interpol`.
 
 ## Description
 
-This package contains a pure python implementation of **high-order spline 
-interpolation** for ND tensors (including 2D and 3D images). It makes use 
-of the just-in-time capabilities of TorchScript and explicitly implements
-the forward and backward passes of all functions, making it **fast** and 
-**memory-efficient**. 
+This package contains a pure Python implementation of **high-order spline
+interpolation** for ND tensors (including 2D and 3D images). It uses the
+just-in-time capabilities of TorchScript and explicitly implements the
+forward and backward passes of all functions, which makes it **fast** and
+**memory-efficient**.
 
-All the functions available in this (small) package were originally 
-implemented in [NITorch](https://github/balbasty/nitorch), a larger 
+All the functions available in this (small) package were originally
+implemented in [NITorch](https://github.com/balbasty/nitorch), a larger
 PyTorch-based package dedicated to NeuroImaging and Medical Image Computing.
 
 ## Installation
 
-### Dependency
+### Dependencies
 
-- `pytorch >= 3.6`
+- `python >= 3.6`
 - `torch >= 1.3`
 
 ### Pip
@@ -35,12 +35,14 @@ pip install fiery-interpol
 from fiery import interpol
 ```
 
-**See our [example notebooks](docs/examples/)**
+**See our [example notebooks](https://bagofseeds.github.io/fiery-interpol/examples/)**
 
 ## Quick doc
 
+The `interpolation` and `bound` arguments below are shared by most
+functions in the package:
 
-```
+```text
 Notes
 -----
 
@@ -87,11 +89,12 @@ interpol.grid_pull(
 """
 Sample an image with respect to a deformation field.
 
-If the input dtype is not a floating point type, the input image is 
-assumed to contain labels. Then, unique labels are extracted 
-and resampled individually, making them soft labels. Finally, 
-the label map is reconstructed from the individual soft labels by 
-assigning the label with maximum soft value.
+If the input dtype is not a floating point type, the input image is
+assumed to contain labels. In that case, the unique labels are
+extracted and resampled individually, which turns them into soft
+labels. The label map is then reconstructed from the individual soft
+labels by assigning, in each output voxel, the label with the largest
+soft value.
 
 Parameters
 ----------
@@ -103,10 +106,11 @@ interpolation : int or sequence[int], default=1
     Interpolation order.
 bound : BoundType or sequence[BoundType], default='zero'
     Boundary conditions.
-extrapolate : bool or int, default=True
+extrapolate : bool or int, default=False
     Extrapolate out-of-bound data.
 prefilter : bool, default=False
-    Apply spline pre-filter (= interpolates the input)
+    Apply the spline pre-filter, so that the spline interpolates
+    the input.
 
 Returns
 -------
@@ -135,20 +139,20 @@ input : (..., [channel], *inshape) tensor
 grid : (..., *inshape, dim) tensor
     Transformation field.
 shape : sequence[int], default=inshape
-    Output shape
+    Output shape.
 interpolation : int or sequence[int], default=1
     Interpolation order.
-bound : BoundType, or sequence[BoundType], default='zero'
+bound : BoundType or sequence[BoundType], default='zero'
     Boundary conditions.
-extrapolate : bool or int, default=True
+extrapolate : bool or int, default=False
     Extrapolate out-of-bound data.
 prefilter : bool, default=False
-    Apply spline pre-filter.
+    Apply the spline pre-filter to the splatted image.
 
 Returns
 -------
 output : (..., [channel], *shape) tensor
-    Spatted image.
+    Splatted image.
 """
 ```
 
@@ -162,28 +166,32 @@ interpol.grid_grad(
     prefilter=False,
 )
 """
-Sample spatial gradients of an image with respect to a deformation field.
+Sample spatial gradients of an image along a deformation field.
+
+The returned gradients are taken with respect to the coordinates of
+the *input* lattice: this function returns (∇f)∘φ, not ∇(f∘φ). To
+obtain gradients with respect to the output lattice, multiply the
+sampled gradients by the Jacobian field of the transformation.
 
 Parameters
 ----------
 input : (..., [channel], *inshape) tensor
     Input image.
-grid : (..., *inshape, dim) tensor
+grid : (..., *outshape, dim) tensor
     Transformation field.
-shape : sequence[int], default=inshape
-    Output shape
 interpolation : int or sequence[int], default=1
     Interpolation order.
-bound : BoundType, or sequence[BoundType], default='zero'
+bound : BoundType or sequence[BoundType], default='zero'
     Boundary conditions.
-extrapolate : bool or int, default=True
+extrapolate : bool or int, default=False
     Extrapolate out-of-bound data.
 prefilter : bool, default=False
-    Apply spline pre-filter (= interpolates the input)
+    Apply the spline pre-filter, so that the spline interpolates
+    the input.
 
 Returns
 -------
-output : (..., [channel], *shape, dim) tensor
+output : (..., [channel], *outshape, dim) tensor
     Sampled gradients.
 """
 ```
@@ -202,15 +210,15 @@ and boundary conditions, along the last `dim` dimensions.
 
 References
 ----------
-..[1]  M. Unser, A. Aldroubi and M. Eden.
-       "B-Spline Signal Processing: Part I-Theory,"
-       IEEE Transactions on Signal Processing 41(2):821-832 (1993).
-..[2]  M. Unser, A. Aldroubi and M. Eden.
-       "B-Spline Signal Processing: Part II-Efficient Design and Applications,"
-       IEEE Transactions on Signal Processing 41(2):834-848 (1993).
-..[3]  M. Unser.
-       "Splines: A Perfect Fit for Signal and Image Processing,"
-       IEEE Signal Processing Magazine 16(6):22-38 (1999).
+1. M. Unser, A. Aldroubi and M. Eden.
+   "B-Spline Signal Processing: Part I-Theory,"
+   IEEE Transactions on Signal Processing 41(2):821-832 (1993).
+2. M. Unser, A. Aldroubi and M. Eden.
+   "B-Spline Signal Processing: Part II-Efficient Design and Applications,"
+   IEEE Transactions on Signal Processing 41(2):834-848 (1993).
+3. M. Unser.
+   "Splines: A Perfect Fit for Signal and Image Processing,"
+   IEEE Signal Processing Magazine 16(6):22-38 (1999).
 
 Parameters
 ----------
@@ -218,10 +226,10 @@ input : (..., *spatial) tensor
     Input image.
 interpolation : int or sequence[int], default=1
     Interpolation order.
-bound : BoundType or sequence[BoundType], default='dct1'
+bound : BoundType or sequence[BoundType], default='dct2'
     Boundary conditions.
-dim : int, default=-1
-    Number of spatial dimensions
+dim : int, default=input.dim()
+    Number of trailing dimensions to process.
 inplace : bool, default=False
     Process the volume in place.
 
@@ -234,24 +242,25 @@ output : (..., *spatial) tensor
 
 ```python
 interpol.resize(
-    image, 
-    factor=None, 
-    shape=None, 
+    image,
+    factor=None,
+    shape=None,
     anchor='c',
-    interpolation=1, 
-    prefilter=True
+    interpolation=1,
+    prefilter=True,
+    **kwargs,
 )
 """Resize an image by a factor or to a specific shape.
 
 Notes
 -----
-.. A least one of `factor` and `shape` must be specified
-.. If `anchor in ('centers', 'edges')`, exactly one of `factor` or
-   `shape must be specified.
-.. If `anchor in ('first', 'last')`, `factor` must be provided even
-   if `shape` is specified.
-.. Because of rounding, it is in general not assured that
-   `resize(resize(x, f), 1/f)` returns a tensor with the same shape as x.
+- At least one of `factor` and `shape` must be specified.
+- If `anchor` is 'centers' or 'edges', exactly one of `factor` or
+  `shape` must be specified.
+- If `anchor` is 'first' or 'last', `factor` must be provided, even
+  if `shape` is specified.
+- Because of rounding, `resize(resize(x, f), 1/f)` is not guaranteed
+  to have the same shape as `x`.
 
         edges          centers          first           last
     e - + - + - e   + - + - + - +   + - + - + - +   + - + - + - +
@@ -265,32 +274,35 @@ Notes
 Parameters
 ----------
 image : (batch, channel, *inshape) tensor
-    Image to resize
+    Image to resize.
 factor : float or list[float], optional
     Resizing factor
     * > 1 : larger image <-> smaller voxels
     * < 1 : smaller image <-> larger voxels
 shape : (ndim,) list[int], optional
-    Output shape
+    Output shape.
 anchor : {'centers', 'edges', 'first', 'last'} or list, default='centers'
-    * In cases 'c' and 'e', the volume shape is multiplied by the
-      zoom factor (and eventually truncated), and two anchor points
-      are used to determine the voxel size.
-    * In cases 'f' and 'l', a single anchor point is used so that
-      the voxel size is exactly divided by the zoom factor.
-      This case with an integer factor corresponds to subslicing
-      the volume (e.g., `vol[::f, ::f, ::f]`).
+    * With 'centers' or 'edges', the volume shape is multiplied by
+      the zoom factor (and truncated if needed), and two anchor
+      points are used to determine the voxel size.
+    * With 'first' or 'last', a single anchor point is used, so that
+      the voxel size is exactly divided by the zoom factor. When
+      1/factor is an integer, this is equivalent to subslicing the
+      volume (factor=1/2 gives x[::2, ::2, ::2]).
     * A list of anchors (one per dimension) can also be provided.
 interpolation : int or sequence[int], default=1
     Interpolation order.
 prefilter : bool, default=True
-    Apply spline pre-filter (= interpolates the input)
+    Apply the spline pre-filter, so that the spline interpolates
+    the input.
+**kwargs : dict
+    Additional keyword arguments passed to `grid_pull`, such as
+    `bound` or `extrapolate`.
 
 Returns
 -------
 resized : (batch, channel, *shape) tensor
-    Resized image
-
+    Resized image.
 """
 ```
 

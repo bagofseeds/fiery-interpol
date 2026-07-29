@@ -62,19 +62,19 @@ def make_list(x):
 
 
 def bound_to_nitorch(bound, as_type='str'):
-    """Convert boundary type to niTorch's convention.
+    """Convert boundary type to NITorch's convention.
 
     Parameters
     ----------
     bound : [list of] str or bound_like
-        Boundary condition in any convention
+        Boundary condition in any convention.
     as_type : {'str', 'enum', 'int'}, default='str'
-        Return BoundType or int rather than str
+        Return a BoundType or an int rather than a str.
 
     Returns
     -------
     bound : [list of] str or BoundType
-        Boundary condition in NITorch's convention
+        Boundary condition in NITorch's convention.
 
     """
     intype = type(bound)
@@ -132,7 +132,7 @@ def inter_to_nitorch(inter, as_type='str'):
     Parameters
     ----------
     inter : [sequence of] int or str or InterpolationType
-    as_type : {'str', 'enum', 'int'}, default='int'
+    as_type : {'str', 'enum', 'int'}, default='str'
 
     Returns
     -------

@@ -10,7 +10,7 @@ def fake_decorator(*a, **k):
 
 
 def make_list(x, n=None, **kwargs):
-    """Ensure that the input  is a list (of a given size)
+    """Ensure that the input is a list (of a given size).
 
     Parameters
     ----------
