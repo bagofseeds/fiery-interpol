@@ -3,8 +3,8 @@
 extra_css = ["stylesheets/extra.css"]
 
 nav = [
-  {"All the Matches" = "https://bagofseeds.github.io/fiery/"},
-  {"Fiery Interpol" = "index.md"},
+  {"Fiery" = "https://bagofseeds.github.io/fiery/"},
+  {"Interpol" = "index.md"},
   {"API" = "api/index.md"},
   {"Examples" = [
     "examples/index.md",
@@ -58,7 +58,7 @@ toggle.name = "Switch to light mode"
 # Logo & icons
 # ----------------------------------------------------------------------------
 [project.theme.icon]
-logo =  "material/fire"
+logo =  "fontawesome/solid/circle-right"
 repo = "fontawesome/brands/github"
 
 # ----------------------------------------------------------------------------
