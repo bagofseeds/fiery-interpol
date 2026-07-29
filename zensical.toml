@@ -3,8 +3,8 @@
 extra_css = ["stylesheets/extra.css"]
 
 nav = [
-  {"All the Matches" = "https://bagofseeds.github.io/fiery/"},
-  {"Fiery Interpol" = "index.md"},
+  {"Fiery" = "https://bagofseeds.github.io/fiery/"},
+  {"Interpol" = "index.md"},
   {"API" = "api/index.md"},
   {"Examples" = [
     "examples/index.md",
