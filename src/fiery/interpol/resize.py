@@ -1,6 +1,6 @@
 """
-Resize functions (equivalent to scipy's zoom, pytorch's interpolate)
-based on grid_pull.
+Resizing functions (equivalent to SciPy's `zoom` and PyTorch's
+`interpolate`) based on `grid_pull`.
 """
 
 __all__ = ['resize']
@@ -33,14 +33,18 @@ def resize(
 
     Notes
     -----
-    .. A least one of `factor` and `shape` must be specified
-    .. If `anchor in ('centers', 'edges')`, exactly one of `factor` or
-       `shape must be specified.
-    .. If `anchor in ('first', 'last')`, `factor` must be provided even
-       if `shape` is specified.
-    .. Because of rounding, it is in general not assured that
-       `resize(resize(x, f), 1/f)` returns a tensor with the same shape as x.
+    - At least one of `factor` and `shape` must be specified.
+    - If `anchor` is `'centers'` or `'edges'`, exactly one of `factor`
+      or `shape` must be specified.
+    - If `anchor` is `'first'` or `'last'`, `factor` must be provided,
+      even if `shape` is specified.
+    - Because of rounding, `resize(resize(x, f), 1/f)` is not guaranteed
+      to have the same shape as `x`.
 
+    The four anchor modes place the sampled points as follows (`e`, `c`,
+    `f` and `l` mark the anchor points of each mode):
+
+    ```
         edges          centers          first           last
     e - + - + - e   + - + - + - +   + - + - + - +   + - + - + - +
     | . | . | . |   | c | . | c |   | f | . | . |   | . | . | . |
@@ -49,35 +53,47 @@ def resize(
     + _ + _ + _ +   + _ + _ + _ +   + _ + _ + _ +   + _ + _ + _ +
     | . | . | . |   | c | . | c |   | . | . | . |   | . | . | l |
     e _ + _ + _ e   + _ + _ + _ +   + _ + _ + _ +   + _ + _ + _ +
+    ```
 
     Parameters
     ----------
     image : (batch, channel, *inshape) tensor
-        Image to resize
+        Image to resize.
     factor : float or list[float], optional
-        Resizing factor
-        * > 1 : larger image <-> smaller voxels
-        * < 1 : smaller image <-> larger voxels
+        Resizing factor:
+
+        - `> 1`: larger image <-> smaller voxels;
+        - `< 1`: smaller image <-> larger voxels.
     shape : (ndim,) list[int], optional
-        Output shape
+        Output shape.
     anchor : {'centers', 'edges', 'first', 'last'} or list, default='centers'
-        * In cases 'c' and 'e', the volume shape is multiplied by the
-          zoom factor (and eventually truncated), and two anchor points
-          are used to determine the voxel size.
-        * In cases 'f' and 'l', a single anchor point is used so that
-          the voxel size is exactly divided by the zoom factor.
-          This case with an integer factor corresponds to subslicing
-          the volume (e.g., `vol[::f, ::f, ::f]`).
-        * A list of anchors (one per dimension) can also be provided.
+        - With `'centers'` or `'edges'`, the volume shape is multiplied
+          by the zoom factor (and truncated if needed), and two anchor
+          points are used to determine the voxel size.
+        - With `'first'` or `'last'`, a single anchor point is used, so
+          that the voxel size is exactly divided by the zoom factor.
+          When `1/factor` is an integer, this is equivalent to
+          subslicing the volume (`factor=1/2` gives `x[::2, ::2, ::2]`).
+        - A list of anchors (one per dimension) can also be provided.
     interpolation : int or sequence[int], default=1
         Interpolation order.
     prefilter : bool, default=True
-        Apply spline pre-filter (= interpolates the input)
+        Apply the spline pre-filter, so that the spline interpolates
+        the input.
+    **kwargs : dict
+        Additional keyword arguments passed to `grid_pull`, such as
+        `bound` or `extrapolate`.
 
     Returns
     -------
     resized : (batch, channel, *shape) tensor
-        Resized image
+        Resized image.
+
+    Raises
+    ------
+    ValueError
+        If neither `factor` nor `shape` is provided, or if `anchor` is
+        not one of `'centers'`, `'edges'`, `'first'` or `'last'`.
 
     """
     if backend.jitfields and jitfields.available:

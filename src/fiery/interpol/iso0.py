@@ -365,7 +365,7 @@ def pushgrad(
     """
     inp: (B, C, *ishape, D) tensor
     g: (B, *ishape, D) tensor
-    shape: List{D}[int], optional, optional
+    shape: List{D}[int], optional
     bound: List{D}[Bound] tensor
     extrapolate: ExtrapolateType
     returns: (B, C, *shape) tensor

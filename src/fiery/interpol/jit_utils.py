@@ -157,7 +157,7 @@ def sub2ind(subs, shape: List[int]):
     Parameters
     ----------
     subs : (D, ...) tensor
-        List of sub-indices. The first dimension is the number of dimension.
+        List of sub-indices. The first dimension is the number of dimensions.
         Each element should have the same number of elements and shape.
     shape : (D,) list[int]
         Size of each dimension. Its length should be the same as the
@@ -188,7 +188,7 @@ def sub2ind_list(subs: List[Tensor], shape: List[int]):
     Parameters
     ----------
     subs : (D,) list[tensor]
-        List of sub-indices. The first dimension is the number of dimension.
+        List of sub-indices. The first dimension is the number of dimensions.
         Each element should have the same number of elements and shape.
     shape : (D,) list[int]
         Size of each dimension. Its length should be the same as the
