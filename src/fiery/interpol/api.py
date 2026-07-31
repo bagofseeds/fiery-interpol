@@ -551,7 +551,7 @@ def spline_coeff(
     ----------
     1. M. Unser, A. Aldroubi and M. Eden.
        "B-Spline Signal Processing: Part I-Theory,"
-       *IEEE Transactions on Signal Processing* 41(2):821-832 (1993).
+       *IEEE Transactions on Signal Processing* 41(2):821-833 (1993).
     2. M. Unser, A. Aldroubi and M. Eden.
        "B-Spline Signal Processing: Part II-Efficient Design and
        Applications,"
@@ -656,7 +656,7 @@ def spline_coeff_nd(
     ----------
     1. M. Unser, A. Aldroubi and M. Eden.
        "B-Spline Signal Processing: Part I-Theory,"
-       *IEEE Transactions on Signal Processing* 41(2):821-832 (1993).
+       *IEEE Transactions on Signal Processing* 41(2):821-833 (1993).
     2. M. Unser, A. Aldroubi and M. Eden.
        "B-Spline Signal Processing: Part II-Efficient Design and
        Applications,"
